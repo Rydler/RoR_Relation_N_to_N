@@ -10,7 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_16_185445) do
+ActiveRecord::Schema.define(version: 2020_09_19_022443) do
+
+  create_table "job_titles", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "magazineoenologistjobtitles", force: :cascade do |t|
+    t.integer "magazine_id", null: false
+    t.integer "oenologist_id", null: false
+    t.integer "job_title_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["job_title_id"], name: "index_magazineoenologistjobtitles_on_job_title_id"
+    t.index ["magazine_id"], name: "index_magazineoenologistjobtitles_on_magazine_id"
+    t.index ["oenologist_id"], name: "index_magazineoenologistjobtitles_on_oenologist_id"
+  end
+
+  create_table "magazines", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "oenologists", force: :cascade do |t|
     t.string "name"
@@ -49,6 +72,9 @@ ActiveRecord::Schema.define(version: 2020_09_16_185445) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "magazineoenologistjobtitles", "job_titles"
+  add_foreign_key "magazineoenologistjobtitles", "magazines"
+  add_foreign_key "magazineoenologistjobtitles", "oenologists"
   add_foreign_key "wine_strains", "strains"
   add_foreign_key "wine_strains", "wines"
 end
