@@ -1,8 +1,8 @@
 class WinesController < ApplicationController
+  before_action :authorize_admin!, except: [:index]
   before_action :set_wine, only: [:show, :edit, :update, :destroy]
   before_action :only_strains_availables, only: [:new, :edit]
   
-
   # GET /wines
   # GET /wines.json
   def index
